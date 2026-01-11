@@ -5,12 +5,12 @@
 
     "module": "commonjs",
     "target": "esnext",
-
+    
     "lib": ["esnext"],
     "types": ["node"],
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "strictPropertyInitialization": true,
+    "strictPropertyInitialization": false,
 
 
     "baseUrl": "./",
