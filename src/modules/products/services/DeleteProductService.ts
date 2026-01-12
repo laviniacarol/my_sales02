@@ -7,14 +7,12 @@ interface IDeleteProductService {
 
 export default class DeleteProductService {
   async execute({ id }: IDeleteProductService): Promise<void> {
+    const product = await productsRepositories.findById(id);
 
-
-     const product = await productsRepositories.findById(id);
-
-        if (!product) {
-          throw new Error("Product not found");
-        }
-
-        await productsRepositories.remove(product);
-  }
+    if (!product) {
+      throw new AppError("Product not found", 404);
     }
+
+    await productsRepositories.remove(product);
+  }
+}
