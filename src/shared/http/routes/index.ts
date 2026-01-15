@@ -7,5 +7,5 @@ routes.get('/health', (request, response) => {
   return response.json({ message: 'Hello dev, im alive :p'});
 });
 routes.use('/products',productsRouter)
-
+routes.use('/users', usersRouter);
 export default routes;
