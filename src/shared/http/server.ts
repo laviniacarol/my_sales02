@@ -1,38 +1,13 @@
+import productsRouter from "@modules/products/routes/ProductRoutes";
+import usersRouter from "@modules/users/routes/UserRoutes";
+import { Router } from "express";
 
+const routes = Router();
 
-import 'reflect-metadata';
-import 'express-async-errors';
-
-import express from 'express';
-import cors from 'cors';
-import routes from './routes';
-
-import { errors } from 'celebrate';
-
-
-import ErrorHandleMiddleware from '@shared/middlewares/ErrorHandleMiddleware';
-import { AppDataSource } from '@shared/typeorm/data-source';
-
-AppDataSource.initialize()
-.then(async () => {
-  const app = express();
-
-app.use(cors());
-app.use(express.json());
-
-app.use(routes);
-app.use(errors());
-app.use(ErrorHandleMiddleware.handleErrors);
-
-console.log("Data Source has been initialized!");
-
-
-app.listen(3333, () => {
-  console.log(`Server is running on port 3333`);
+routes.get("/health", (request, response) => {
+  return response.json({ message: "Hello dev, im alive :p" });
 });
-})
-
-  .catch(error => {
-    console.error("Error during Data Source initialization:", error)
-  });
-
+routes.use("/products", productsRouter);
+routes.use("/users", usersRouter);
+routes.use("/sessions", usersRouter);
+export default routes;
