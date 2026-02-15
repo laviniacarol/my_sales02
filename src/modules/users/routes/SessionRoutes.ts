@@ -1,10 +1,15 @@
 import { Router } from "express";
-import SessionsControllers from "../controllers/SessionsControllers";
-import { sessionSchema } from "@modules/products/schemas/SessionSchema";
+import SessionsController from "../controllers/SessionsController";
+import { sessionSchemaValidation } from "../schema/SessionSchema";
 
 const sessionRouter = Router();
-const sessionsControllers = new SessionsControllers();
+const sessionsController = new SessionsController();
 
-sessionRouter.post("/", sessionSchema, sessionsControllers.create);
+sessionRouter.post(
+  "/",
+  sessionSchemaValidation,
+  sessionsController.create.bind(sessionsController)
+);
+
 
 export default sessionRouter;

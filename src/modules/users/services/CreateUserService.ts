@@ -10,23 +10,23 @@ interface ICreateUser {
 }
 
 export default class CreateUserService {
-  async execute ({ name, email, password}: ICreateUser): Promise<User> {
-   const emailExists = await usersRepositories.findByEmail(email);
+  async execute({ name, email, password }: ICreateUser): Promise<User> {
+    const emailExists = await usersRepositories.findByEmail(email);
 
-   if (emailExists) {
-    throw new Error('Email address already used.');
-   }
+    if (emailExists) {
+      throw new AppError("Email address already used.", 400);
+    }
 
-   const hashPassword = await hash(password, 10);
+    const hashPassword = await hash(password, 10);
 
-   const user = usersRepositories.create({
-    name,
-    email,
-    password: hashPassword,
-   });
+    const user = usersRepositories.create({
+      name,
+      email,
+      password: hashPassword,
+    });
 
-   await usersRepositories.save(user);
+    await usersRepositories.save(user);
 
-   return user;
+    return user;
   }
 }

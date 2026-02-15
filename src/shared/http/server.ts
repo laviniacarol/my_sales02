@@ -1,13 +1,29 @@
-import productsRouter from "@modules/products/routes/ProductRoutes";
-import usersRouter from "@modules/users/routes/UserRoutes";
-import { Router } from "express";
+import "dotenv/config";
+import "express-async-errors";
 
-const routes = Router();
+import cors from "cors";
+import express from "express";
 
-routes.get("/health", (request, response) => {
-  return response.json({ message: "Hello dev, im alive :p" });
-});
-routes.use("/products", productsRouter);
-routes.use("/users", usersRouter);
-routes.use("/sessions", usersRouter);
-export default routes;
+import routes from "./routes";
+import ErrorHandleMiddleware from "@shared/middlewares/ErrorHandleMiddleware";
+import { AppDataSource } from "@shared/typeorm/data-source";
+
+const app = express();
+
+app.use(cors());
+app.use(express.json());
+app.use(routes);
+
+app.use(ErrorHandleMiddleware.handleErrors);
+
+const port = Number(process.env.PORT) || 3333;
+
+AppDataSource.initialize()
+  .then(() => {
+    app.listen(port, () => {
+      console.log(`API running on port ${port}`);
+    });
+  })
+  .catch((err) => {
+    console.error("Data Source initialization error:", err);
+  });

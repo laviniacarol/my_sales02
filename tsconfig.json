@@ -20,6 +20,11 @@
       "@shared/*": ["src/shared/*"]
     },
 
+    "typeRoots": [
+      "node_modules/@types",
+      "src/@types"
+    ],
+
     "strict": true,
     "esModuleInterop": true,
     "resolveJsonModule": true,
