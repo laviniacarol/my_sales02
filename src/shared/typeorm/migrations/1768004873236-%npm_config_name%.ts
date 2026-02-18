@@ -45,6 +45,8 @@ export class CreateMigration1768004873236 implements MigrationInterface {
     )
   }
 
+  
+
   public async down(queryRunner: QueryRunner): Promise<void> {
   }
 
