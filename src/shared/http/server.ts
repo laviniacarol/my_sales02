@@ -10,8 +10,12 @@ import { AppDataSource } from "@shared/typeorm/data-source";
 
 const app = express();
 
-app.use(cors());
+app.use(cors({
+  exposedHeaders: ['Authorization'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+}));
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use(routes);
 
 app.use(ErrorHandleMiddleware.handleErrors);

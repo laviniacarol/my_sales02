@@ -29,7 +29,7 @@ export default class AuthMiddleware {
 
       next();
     } catch (error) {
-      throw new AppError("Invalid token", 401);
+      return next(new AppError("Invalid token", 401));
     }
   }
 }
