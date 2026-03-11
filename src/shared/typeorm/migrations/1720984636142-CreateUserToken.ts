@@ -10,25 +10,21 @@ export class CreateUserToken1720984636142 implements MigrationInterface {
         columns: [
           {
             name: "id",
-            type: "uuid",
+            type: "integer",
             isPrimary: true,
-            generationStrategy: "uuid",
-            default: "uuid_generate_v4()",
+            isGenerated: true,
+            generationStrategy: "increment",
           },
           {
-            name: "user_id",
-            type: "uuid",
+            name: "userId",
+            type: "integer",
             isNullable: false,
           },
           {
             name: "token",
             type: "uuid",
             isUnique: true,
-          },
-          {
-            name: "type",
-            type: "varchar",
-            default: "'refresh'",
+            default: "uuid_generate_v4()",
           },
           {
             name: "updated_at",
@@ -47,7 +43,7 @@ export class CreateUserToken1720984636142 implements MigrationInterface {
     await queryRunner.createForeignKey(
       "user_tokens",
       new TableForeignKey({
-        columnNames: ["user_id"],
+        columnNames: ["userId"],
         referencedColumnNames: ["id"],
         referencedTableName: "users",
         onDelete: "CASCADE",
