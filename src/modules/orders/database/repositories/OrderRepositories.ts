@@ -6,7 +6,7 @@ import { OrderProducts } from "../entities/OrderProducts";
 
 interface ICreateOrder {
   customer: Customer;
-  products: OrderProducts[];
+  products: Array<Pick<OrderProducts, "product" | "price" | "quantity">>;
 }
 
 
