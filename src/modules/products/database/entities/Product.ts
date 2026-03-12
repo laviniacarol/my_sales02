@@ -1,10 +1,14 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { OrderProducts } from "@modules/orders/database/entities/OrderProducts";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity("products")
 
 export class Product {
   @PrimaryGeneratedColumn()
   id: string;
+
+  @OneToMany(() => OrderProducts, order_products => order_products.product)
+  order_products: OrderProducts[];
 
   @Column({type: 'text'})
   name: string;
