@@ -1,5 +1,4 @@
 import { celebrate, Joi, Segments } from "celebrate";
-import { join } from "path";
 
 export const UpdateUserSchema = celebrate ({
   [Segments.BODY]: {

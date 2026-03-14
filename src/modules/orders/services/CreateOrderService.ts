@@ -62,12 +62,22 @@ export class CreateOrderService {
       products: serializedProducts,
     });
 
-    const updatedProducts = existsProducts.map(product => ({
-      ...product,
-      quantity: product.quantity - (productCountById[product.id] ?? 0),
-    }));
+    const { order_products } = order;
 
-    await productsRepositories.save(updatedProducts);
+    const updateProductQuantity = order_products.map(product => {
+      const foundProduct = existsProducts.find(p => p.id === product.product.id);
+
+      if (!foundProduct) {
+        throw new AppError(`Could not find product ${product.product.id}`, 404);
+      }
+
+      return {
+        id: product.product.id,
+        quantity: foundProduct.quantity - product.quantity,
+      };
+    });
+
+    await productsRepositories.save(updateProductQuantity);
 
     return order;
   }

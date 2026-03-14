@@ -1,7 +1,6 @@
 import { Router } from "express";
 import CustomersControllers from "../controllers/CustumersControllers";
 import AuthMiddleware from "@shared/middlewares/authMiddleware";
-import { idParamValidation } from "@modules/products/schemas/ProductSchema";
 import { idParamsValidate, UpdateCustomerSchema } from "../schemas/CustomerSchema";
 
 const customersRouter = Router();

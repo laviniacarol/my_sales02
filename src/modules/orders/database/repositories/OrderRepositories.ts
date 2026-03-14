@@ -1,6 +1,5 @@
 import { AppDataSource } from "@shared/typeorm/data-source";
 import { Order } from "../entities/Order";
-import { Product } from "@modules/products/database/entities/Product";
 import { Customer } from "@modules/customers/database/entities/Customer";
 import { OrderProducts } from "../entities/OrderProducts";
 

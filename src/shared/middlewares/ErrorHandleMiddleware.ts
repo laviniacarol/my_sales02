@@ -9,6 +9,9 @@ class ErrorHandleMiddleware {
     res: Response,
     next: NextFunction
   ) {
+    void req;
+    void next;
+
     if (isCelebrateError(error)) {
       const details = error.details.get("body");
       const message = details?.details?.[0]?.message || "Validation failed";

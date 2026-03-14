@@ -28,7 +28,7 @@ export default class AuthMiddleware {
       };
 
       next();
-    } catch (error) {
+    } catch {
       return next(new AppError("Invalid token", 401));
     }
   }
