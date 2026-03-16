@@ -7,14 +7,17 @@ import express from "express";
 import routes from "./routes";
 import ErrorHandleMiddleware from "@shared/middlewares/ErrorHandleMiddleware";
 import { AppDataSource } from "@shared/typeorm/data-source";
+import rateLimiter from "@shared/middlewares/rateLimiter";
 
 const app = express();
+
 
 app.use(cors({
   exposedHeaders: ['Authorization'],
   allowedHeaders: ['Content-Type', 'Authorization']
 }));
 app.use(express.json());
+app.use(rateLimiter);
 app.use(express.urlencoded({ extended: true }));
 app.use(routes);
 
