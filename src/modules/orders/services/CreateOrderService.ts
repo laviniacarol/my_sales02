@@ -1,7 +1,7 @@
 
 import { Order } from "../database/entities/Order";
 import { productsRepositories } from "@modules/products/database/repositories/ProductsRepositories";
-import { customerRepository } from "@modules/customers/database/repositories/CustomerRepositories";
+import { customerRepository } from "@modules/customers/infra/database/repositories/CustomerRepositories";
 import { orderRepositories } from "../database/repositories/OrderRepositories";
 import AppError from "@shared/errors/AppError";
 

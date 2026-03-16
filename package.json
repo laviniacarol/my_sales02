@@ -2,16 +2,16 @@
   "name": "my_sales02",
   "version": "1.0.0",
   "description": "",
-  "main": "dist/shared/http/server.js",
+  "main": "build/shared/infra/http/server.js",
   "type": "commonjs",
   "scripts": {
-    "dev": "ts-node-dev --respawn --transpile-only -r tsconfig-paths/register src/shared/http/server.ts",
+    "dev": "ts-node-dev --respawn --transpile-only -r tsconfig-paths/register src/shared/infra/http/server.ts",
     "build": "tsc",
-    "start": "node dist/shared/http/server.js",
+    "start": "node build/shared/infra/http/server.js",
     "lint": "eslint . --ext .ts",
     "lint-fix": "eslint . --ext .ts --fix",
     "migration:create": "node ./build/config/migration-create.js",
-    "migration:run": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js migration:run -d ./src/shared/typeorm/data-source.ts"
+    "migration:run": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js migration:run -d ./src/shared/infra/typeorm/data-source.ts"
   },
   "keywords": [],
   "author": "",

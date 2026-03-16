@@ -7,7 +7,7 @@ import express from 'express';
 import uploadConfig from '@config/upload';
 import passwordRouter from '@modules/users/routes/PasswordRoutes';
 import profileRouter from '@modules/users/routes/ProfileRoutes';
-import customersRouter from '@modules/customers/routes/CustomerRoutes';
+import customersRouter from '@modules/customers/infra/http/routes/CustomerRoutes';
 import ordersRouter from '@modules/orders/routes/OrdersRoutes';
 
 

@@ -6,7 +6,7 @@ import express from "express";
 
 import routes from "./routes";
 import ErrorHandleMiddleware from "@shared/middlewares/ErrorHandleMiddleware";
-import { AppDataSource } from "@shared/typeorm/data-source";
+import { AppDataSource } from "@shared/infra/typeorm/data-source";
 import rateLimiter from "@shared/middlewares/rateLimiter";
 
 const app = express();

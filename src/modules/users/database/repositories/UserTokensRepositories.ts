@@ -1,5 +1,5 @@
 import UserToken from "../entities/UserToken";
-import { AppDataSource } from "@shared/typeorm/data-source";
+import { AppDataSource } from "@shared/infra/typeorm/data-source";
 
 export const userTokenRepositories = AppDataSource.getRepository(
   UserToken,
