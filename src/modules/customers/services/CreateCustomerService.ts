@@ -1,11 +1,9 @@
 import AppError from "@shared/errors/AppError";
-import { Customer } from "../infra/database/entities/Customer";
 import { customerRepository } from "../infra/database/repositories/CustomerRepositories";
+import { Customer } from "../infra/database/entities/Customer";
+import { ICreateCustomer } from "../domain/models/ICreateUser";
 
-interface ICreateCustomer {
-  name: string;
-  email: string;
-}
+
 
 export class CreateCustomerService {
   public async execute({ name, email }: ICreateCustomer): Promise<Customer> {
@@ -15,7 +13,7 @@ export class CreateCustomerService {
      throw new AppError("Email already in use", 400);
    }
 
-   const customer = customerRepository.create({
+   const customer = await customerRepository.create({
      name,
      email,
    });

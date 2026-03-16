@@ -1,7 +1,8 @@
 import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { ICustomer } from "@modules/customers/domain/models/ICustumer";
 
 @Entity('customers')
-export class Customer {
+export class Customer implements ICustomer {
   @PrimaryGeneratedColumn()
   id: number;
 
