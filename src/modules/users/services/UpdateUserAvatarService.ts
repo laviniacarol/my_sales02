@@ -4,12 +4,7 @@ import { usersRepositories } from "../database/repositories/UsersRepositories";
 import AppError from "@shared/errors/AppError";
 import path from "path/win32";
 import fs from "fs";
-
-interface IUpdateUserAvatar {
-  userId: number;
-  avatarFilename: string;
-}
-
+import { IUpdateUserAvatar } from "../domain/models/IUpdateUserAvatar";
 
 export default class UpdateUserAvatarService {
   async execute({ userId, avatarFilename }: IUpdateUserAvatar): Promise<User> {

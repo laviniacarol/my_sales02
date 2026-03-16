@@ -1,10 +1,7 @@
 import AppError from "@shared/errors/AppError";
 import { Product } from "../database/entities/Product";
 import { productsRepositories } from "../database/repositories/ProductsRepositories";
-
-interface IShowProduct {
-  id: string;
-}
+import { IShowProduct } from "../domain/models/IShowProduct";
 
 export default class ShowProductService {
   async execute({ id }: IShowProduct): Promise<Product> {

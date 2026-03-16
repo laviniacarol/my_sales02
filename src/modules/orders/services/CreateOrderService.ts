@@ -4,11 +4,7 @@ import { productsRepositories } from "@modules/products/database/repositories/Pr
 import { customerRepository } from "@modules/customers/infra/database/repositories/CustomerRepositories";
 import { orderRepositories } from "../database/repositories/OrderRepositories";
 import AppError from "@shared/errors/AppError";
-
-interface ICreateOrder {
-  customer_id: string;
-  products: string[] | number[];
-}
+import { ICreateOrder } from "../domain/models/ICreateOrder";
 
 export class CreateOrderService {
   async execute({ customer_id, products }: ICreateOrder): Promise<Order> {

@@ -2,17 +2,10 @@ import { usersRepositories } from "../database/repositories/UsersRepositories";
 import { compare } from "bcryptjs";
 import { User } from "../../users/database/entities/User";
 import { Secret, sign } from "jsonwebtoken";
+import { ISessionResponse } from "../domain/models/ISessionResponse";
 import AppError from "@shared/errors/AppError";
+import { ISessionUser } from "../domain/models/ISessionUser";
 
-interface ISessionUser {
-  email: string;
-  password: string;
-}
-
-interface ISessionResponse {
-  user: User;
-  token: string;
-}
 
 export default class SessionUserService {
   async execute({ email, password }: ISessionUser): Promise<ISessionResponse> {

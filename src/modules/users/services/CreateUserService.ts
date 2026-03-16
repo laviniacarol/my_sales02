@@ -2,12 +2,7 @@ import { User } from "../database/entities/User";
 import AppError from "@shared/errors/AppError";
 import { usersRepositories } from "../database/repositories/UsersRepositories";
 import { hash } from "bcrypt";
-
-interface ICreateUser {
-  name: string;
-  email: string;
-  password: string;
-}
+import { ICreateUser } from "../domain/models/ICreateUser";
 
 export default class CreateUserService {
   async execute({ name, email, password }: ICreateUser): Promise<User> {

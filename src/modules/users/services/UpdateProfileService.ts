@@ -2,15 +2,7 @@ import { compare, hash } from 'bcrypt';
 import { User } from '../database/entities/User';
 import { usersRepositories } from '../database/repositories/UsersRepositories';
 import AppError from '@shared/errors/AppError';
-
-
-interface IUpdateProfile {
-  userId: number;
-  name: string;
-  email: string;
-  password?: string;
-  oldPassword?: string;
-}
+import { IUpdateProfile } from '../domain/models/IUpdateProfile';
 
 export default class UpdateProfileService {
   async execute({

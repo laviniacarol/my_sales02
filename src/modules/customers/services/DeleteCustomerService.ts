@@ -1,15 +1,17 @@
 import AppError from "@shared/errors/AppError";
-import { customerRepository } from "../infra/database/repositories/CustomerRepositories";
 import { IDeleteCustomer } from "../domain/models/IDeleteCustomer";
+import { ICustomersRepository } from "../domain/repositories/ICustomersRepositories";
 
 export default class DeleteCustomerService {
+    constructor(private customerRepository: ICustomersRepository) {}
+
   public async execute({ id }: IDeleteCustomer): Promise<void> {
-    const customer = await customerRepository.findById(id);
+    const customer = await this.customerRepository.findById(id);
 
     if (!customer) {
       throw new AppError("Customer not found", 404);
     }
 
-    await customerRepository.remove(customer);
+    await this.customerRepository.remove(customer);
   }
 }

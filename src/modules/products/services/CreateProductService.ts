@@ -1,12 +1,7 @@
 import AppError from "@shared/errors/AppError";
 import { Product } from "../database/entities/Product";
 import { productsRepositories } from "../database/repositories/ProductsRepositories";
-
-interface ICreateProduct {
-  name: string;
-  price: number;
-  quantity: number;
-}
+import { ICreateProduct } from "../domain/models/ICreateProduct";
 
 export default class CreateProductService {
   async execute(

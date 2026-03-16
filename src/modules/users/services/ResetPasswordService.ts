@@ -3,11 +3,7 @@ import { userTokenRepositories } from "../database/repositories/UserTokensReposi
 import { usersRepositories } from "../database/repositories/UsersRepositories";
 import { isAfter, addHours } from "date-fns";
 import AppError from "@shared/errors/AppError";
-
-interface IResetPassword {
-  token: string;
-  password: string;
-}
+import { IResetPassword } from "../domain/models/IResetPassword";
 
 
 export default class ResetPasswordService {
