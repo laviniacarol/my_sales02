@@ -5,10 +5,13 @@ import AppError from "@shared/errors/AppError";
 import path from "path/win32";
 import fs from "fs";
 import { IUpdateUserAvatar } from "../domain/models/IUpdateUserAvatar";
+import { IUsersRepository } from "../domain/repositories/IUsersRepositories";
 
 export default class UpdateUserAvatarService {
+  constructor(private usersRepository: IUsersRepository = usersRepositories) {}
+
   async execute({ userId, avatarFilename }: IUpdateUserAvatar): Promise<User> {
-    const user = await usersRepositories.findById(Number(userId));
+    const user = await this.usersRepository.findById(Number(userId));
 
     if (!user) {
       throw new AppError("User not found.", 404);
@@ -26,7 +29,7 @@ export default class UpdateUserAvatarService {
 
     user.avatar = avatarFilename;
 
-    await usersRepositories.save(user);
+    await this.usersRepository.save(user);
 
     return user;
   }}

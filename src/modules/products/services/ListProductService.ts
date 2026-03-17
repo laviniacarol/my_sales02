@@ -1,8 +1,10 @@
 import RedisCache from "@shared/cache/RedisCache";
 import { Product } from "../database/entities/Product";
 import { productsRepositories } from "../database/repositories/ProductsRepositories";
+import { IProductsRepository } from "../domain/repositories/IProductsRepositories";
 
 export default class ListProductService {
+  constructor(private productsRepository: IProductsRepository = productsRepositories) {}
   async execute(): Promise<Product[]> {
     const redisCache = new RedisCache();
 
@@ -11,7 +13,7 @@ export default class ListProductService {
     );
 
     if(!products) {
-      products = await productsRepositories.find();
+      products = await this.productsRepository.find();
 
       await redisCache.save(
         'api-mysales-PRODUCT_LIST',

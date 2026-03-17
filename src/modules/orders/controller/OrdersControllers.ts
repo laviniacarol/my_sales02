@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { ShowOrderService } from "../services/ShowOrderService";
 import { CreateOrderService } from "../services/CreateOrderService";
+import { orderRepositories } from "../database/repositories/OrderRepositories";
 
 
 export default class OrderControllers {
@@ -16,7 +17,7 @@ export default class OrderControllers {
 
   async create(request: Request, response: Response): Promise<Response> {
       const { customer_id, products } = request.body;
-      const createOrder = new CreateOrderService();
+      const createOrder = new CreateOrderService(orderRepositories);
 
       const order = await createOrder.execute({
         customer_id,

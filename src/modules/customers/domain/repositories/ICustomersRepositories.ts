@@ -8,10 +8,10 @@ export interface Pagination {
 
 export interface ICustomersRepository {
   findByEmail(email: string): Promise<ICustomer | undefined>;
-  create(data: ICreateCustomer): Promise<ICustomer>;
+  create(data: ICreateCustomer): ICustomer;
   save(customer: ICustomer): Promise<ICustomer>;
-  remove(customer: ICustomer): Promise<void>;
+  remove(customer: ICustomer): Promise<ICustomer>;
   findById(id: number): Promise<ICustomer | undefined>;
   findAndCount(pagination: Pagination): Promise<[ICustomer[], number]>;
-  findByName(name: string): Promise<ICustomer | null>;
+  findByName(name: string): Promise<ICustomer | undefined>;
 }

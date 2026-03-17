@@ -3,10 +3,13 @@ import AppError from "@shared/errors/AppError";
 import { usersRepositories } from "../database/repositories/UsersRepositories";
 import { hash } from "bcrypt";
 import { ICreateUser } from "../domain/models/ICreateUser";
+import { IUsersRepository } from "../domain/repositories/IUsersRepositories";
 
 export default class CreateUserService {
+  constructor(private usersRepository: IUsersRepository = usersRepositories) {}
+
   async execute({ name, email, password }: ICreateUser): Promise<User> {
-    const emailExists = await usersRepositories.findByEmail(email);
+    const emailExists = await this.usersRepository.findByEmail(email);
 
     if (emailExists) {
       throw new AppError("Email address already used.", 400);
@@ -14,13 +17,13 @@ export default class CreateUserService {
 
     const hashPassword = await hash(password, 10);
 
-    const user = usersRepositories.create({
+    const user = this.usersRepository.create({
       name,
       email,
       password: hashPassword,
     });
 
-    await usersRepositories.save(user);
+    await this.usersRepository.save(user);
 
     return user;
   }

@@ -1,5 +1,4 @@
 import AppError from "@shared/errors/AppError";
-import { customerRepository } from "../infra/database/repositories/CustomerRepositories";
 import { Customer } from "../infra/database/entities/Customer";
 import { ICreateCustomer } from "../domain/models/ICreateUser";
 import { ICustomersRepository } from "../domain/repositories/ICustomersRepositories";

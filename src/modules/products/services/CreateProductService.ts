@@ -2,25 +2,27 @@ import AppError from "@shared/errors/AppError";
 import { Product } from "../database/entities/Product";
 import { productsRepositories } from "../database/repositories/ProductsRepositories";
 import { ICreateProduct } from "../domain/models/ICreateProduct";
+import { IProductsRepository } from "../domain/repositories/IProductsRepositories";
 
 export default class CreateProductService {
+  constructor(private productsRepository: IProductsRepository = productsRepositories) {}
   async execute(
     { name, price, quantity }: ICreateProduct
   ): Promise<Product> {
 
-    const productExists = await productsRepositories.findByName(name);
+    const productExists = await this.productsRepository.findByName(name);
 
     if (productExists) {
       throw new AppError("Product already exists");
     }
 
-    const product = productsRepositories.create({
+    const product = this.productsRepository.create({
       name,
       price,
       quantity,
     });
 
-    await productsRepositories.save(product);
+    await this.productsRepository.save(product);
 
     return product;
   }

@@ -4,17 +4,24 @@ import { usersRepositories } from "../database/repositories/UsersRepositories";
 import { isAfter, addHours } from "date-fns";
 import AppError from "@shared/errors/AppError";
 import { IResetPassword } from "../domain/models/IResetPassword";
+import { IUsersRepository } from "../domain/repositories/IUsersRepositories";
+import { IUserTokensRepository } from "../domain/repositories/IUserTokensRepositories";
 
 
 export default class ResetPasswordService {
+ constructor(
+  private usersRepository: IUsersRepository = usersRepositories,
+  private userTokensRepository: IUserTokensRepository = userTokenRepositories,
+ ) {}
+
  async execute({ token, password }: IResetPassword): Promise<void> {
-  const userToken = await userTokenRepositories.findByToken(token);
+  const userToken = await this.userTokensRepository.findByToken(token);
 
   if (!userToken) {
     throw new AppError("User token does not exist", 400);
   }
 
-  const user = await usersRepositories.findById(userToken.userId);
+  const user = await this.usersRepository.findById(userToken.userId);
 
   if(!user) {
     throw new AppError("User does not exist", 404);
@@ -29,7 +36,7 @@ export default class ResetPasswordService {
 
   user.password = await hash(password, 8);
 
-  await usersRepositories.save(user);
+  await this.usersRepository.save(user);
 
 }
 }

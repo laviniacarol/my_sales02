@@ -2,16 +2,23 @@ import { usersRepositories } from "../database/repositories/UsersRepositories";
 import AppError from "@shared/errors/AppError";
 import { userTokenRepositories } from "../database/repositories/UserTokensRepositories";
 import { sendEmail } from "@config/email";
+import { IUsersRepository } from "../domain/repositories/IUsersRepositories";
+import { IUserTokensRepository } from "../domain/repositories/IUserTokensRepositories";
 
 export default class SendForgotPasswordEmailService {
+  constructor(
+    private usersRepository: IUsersRepository = usersRepositories,
+    private userTokensRepository: IUserTokensRepository = userTokenRepositories,
+  ) {}
+
   async execute(email: string): Promise<void> {
-    const user = await usersRepositories.findByEmail(email);
+    const user = await this.usersRepository.findByEmail(email);
 
     if (!user) {
       throw new AppError("User does not exist", 404);
     }
 
-    const token = await userTokenRepositories.generate(user.id);
+    const token = await this.userTokensRepository.generate(user.id);
 
     if (!token) {
       throw new AppError("Error generating reset token", 500);

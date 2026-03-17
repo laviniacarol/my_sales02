@@ -3,8 +3,11 @@ import { User } from '../database/entities/User';
 import { usersRepositories } from '../database/repositories/UsersRepositories';
 import AppError from '@shared/errors/AppError';
 import { IUpdateProfile } from '../domain/models/IUpdateProfile';
+import { IUsersRepository } from '../domain/repositories/IUsersRepositories';
 
 export default class UpdateProfileService {
+  constructor(private usersRepository: IUsersRepository = usersRepositories) {}
+
   async execute({
     userId,
     name,
@@ -12,14 +15,14 @@ export default class UpdateProfileService {
     password,
     oldPassword,
   }: IUpdateProfile): Promise<User> {
-    const user = await usersRepositories.findById(userId);
+    const user = await this.usersRepository.findById(userId);
 
     if(!user) {
       throw new AppError("User not found", 404);
     }
 
     if(email) {
-        const userUpdateEmail = await usersRepositories.findByEmail(email);
+        const userUpdateEmail = await this.usersRepository.findByEmail(email);
 
         if(userUpdateEmail) {
           throw new AppError("Email already in use", 400);
@@ -46,7 +49,7 @@ export default class UpdateProfileService {
       user.name = name;
     }
 
-    await usersRepositories.save(user);
+    await this.usersRepository.save(user);
 
     return user;
   }
