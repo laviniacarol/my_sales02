@@ -2,15 +2,14 @@ import AppError from "@shared/errors/AppError";
 import { Customer } from "../infra/database/entities/Customer";
 import { ICreateCustomer } from "../domain/models/ICreateUser";
 import { ICustomersRepository } from "../domain/repositories/ICustomersRepositories";
+import { inject, injectable } from "tsyringe";
 
-
-
+@injectable()
 export class CreateCustomerService {
-  private customerRepository: ICustomersRepository;
-
-  constructor(customerRepository: ICustomersRepository) {
-    this.customerRepository = customerRepository;
-  }
+  constructor(
+    @(inject("CustomersRepository") as ParameterDecorator)
+    private customerRepository: ICustomersRepository,
+  ) {}
 
   public async execute({ name, email }: ICreateCustomer): Promise<Customer> {
    const emailExists = await this.customerRepository.findByEmail(email);
@@ -29,3 +28,6 @@ export class CreateCustomerService {
    return customer;
   }
 }
+
+export default CreateCustomerService;
+
