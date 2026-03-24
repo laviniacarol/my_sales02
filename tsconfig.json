@@ -7,7 +7,7 @@
     "target": "esnext",
     
     "lib": ["esnext"],
-    "types": ["node"],
+    "types": ["node", "jest"],
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "strictPropertyInitialization": false,

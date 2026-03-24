@@ -1,6 +1,5 @@
 import { usersRepositories } from "../database/repositories/UsersRepositories";
 import { compare } from "bcryptjs";
-import { User } from "../../users/database/entities/User";
 import { Secret, sign } from "jsonwebtoken";
 import { ISessionResponse } from "../domain/models/ISessionResponse";
 import AppError from "@shared/errors/AppError";

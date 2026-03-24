@@ -2,7 +2,7 @@ node_modules/
 build/
 temp/
 .env
-coverage
+coverage/
 ormconfig.json
 dist
 .idea/
