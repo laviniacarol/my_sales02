@@ -1,6 +1,7 @@
 import CreateUserService from "./CreateUserService";
 import FakeUserRepositories from "../domain/repositories/fakes/FakeUserRepositories";
 import AppError from "@shared/errors/AppError";
+import { userMock } from "../domain/factories/user.factory";
 
 let fakeUserRepository: FakeUserRepositories;
 let createUser: CreateUserService;
@@ -12,40 +13,24 @@ describe("CreateUserService", () => {
   });
 
   it("should be able to create a new user", async () => {
-    const user = await createUser.execute({
-      name: "John Doe",
-      email: "johndoe@example.com",
-      password: "123456",
-    });
+    const user = await createUser.execute(userMock);
 
     expect(user).toHaveProperty("id");
-    expect(user.name).toBe("John Doe");
-    expect(user.email).toBe("johndoe@example.com");
+    expect(user.name).toBe(userMock.name);
+    expect(user.email).toBe(userMock.email);
   });
 
   it("should not be able to create a user with an already existing email", async () => {
-    await createUser.execute({
-      name: "John Doe",
-      email: "johndoe@example.com",
-      password: "123456",
-    });
+    await createUser.execute(userMock);
 
     await expect(
-      createUser.execute({
-        name: "Jane Doe",
-        email: "johndoe@example.com",
-        password: "654321",
-      }),
+      createUser.execute({ ...userMock, name: "Jane Doe" }),
     ).rejects.toBeInstanceOf(AppError);
   });
 
   it("should hash the user password before saving", async () => {
-    const user = await createUser.execute({
-      name: "John Doe",
-      email: "johndoe@example.com",
-      password: "123456",
-    });
+    const user = await createUser.execute(userMock);
 
-    expect(user.password).not.toBe("123456");
+    expect(user.password).not.toBe(userMock.password);
   });
 });
