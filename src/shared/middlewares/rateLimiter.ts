@@ -1,6 +1,6 @@
 import AppError from "@shared/errors/AppError";
 import { NextFunction, Request, Response } from "express";
-import { RateLimiterRedis } from "rate-limiter-flexible";
+import { RateLimiterRedis, RateLimiterRes } from "rate-limiter-flexible";
 import { createClient } from "redis";
 
 
@@ -27,8 +27,12 @@ export default async function rateLimiter(
   try {
     await limiter.consume(request.ip as string);
     return next();
-  } catch {
-    throw new AppError('Too many requests', 429);
+  } catch (err) {
+    if (err instanceof RateLimiterRes) {
+      throw new AppError('Too many requests', 429);
+    }
+    // Redis unavailable — fail open to avoid blocking all requests
+    return next();
   }
 
 }
